@@ -22,6 +22,7 @@ project/
 ├─ README.md
 └─ report.pdf
 
+streamlit run streamlit_app.py
 
 
 
