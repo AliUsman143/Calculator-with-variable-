@@ -21,7 +21,7 @@ class TestCompiler(unittest.TestCase):
         assign = AssignmentNode('x', NumberNode(10))
         evaluate(assign, symtab)
         self.assertEqual(symtab.get('x'), 10)
-
+# this is function for  evaluating the expression
     def test_binop_add(self):
         node = BinOpNode('+', NumberNode(2), NumberNode(3))
         result = evaluate(node, SymbolTable())

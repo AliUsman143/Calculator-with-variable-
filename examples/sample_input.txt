@@ -1,3 +1,7 @@
 x = 5 + 3
 y = x * 2
 z = y - 4
+a=4+43-46343*33
+example to run the code 
+y=3+4
+like this code 

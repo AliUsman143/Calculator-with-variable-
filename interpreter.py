@@ -9,7 +9,7 @@ def evaluate(node):
     elif isinstance(node, ast_nodes.VarNode):
         if node.name in symbol_table:
             return symbol_table[node.name]
-        else:
+        else: #if variable is not define 
             raise Exception(f"Variable '{node.name}' not defined.")
 
     elif isinstance(node, ast_nodes.BinOpNode):

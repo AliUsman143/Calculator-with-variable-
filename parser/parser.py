@@ -1,15 +1,14 @@
-# parser/parser.py
-
 import ply.yacc as yacc
 from .ast_nodes import AssignmentNode, BinOpNode, NumberNode, VarNode
 from lexer.my_lexer import tokens  # ✅ correct import
-import ply.lex as lex
 
+# Operator precedence rules
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
 )
 
+# Grammar rules
 def p_statement_assign(p):
     'statement : ID EQUALS expression'
     p[0] = AssignmentNode(p[1], p[3])
@@ -33,7 +32,14 @@ def p_expression_id(p):
     'expression : ID'
     p[0] = VarNode(p[1])
 
+# Syntax error handling
 def p_error(p):
-    print("Syntax error in input!", p)
+    if p:
+        print(f"Syntax error at '{p.value}'")
+        raise SyntaxError(f"Syntax error near '{p.value}'")
+    else:
+        print("Syntax error at end of input")
+        raise SyntaxError("Syntax error at end of input")
 
+# Build parser
 parser = yacc.yacc()

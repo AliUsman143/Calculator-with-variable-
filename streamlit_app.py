@@ -1,4 +1,5 @@
 # streamlit_app.py
+# Streamlit frontend for Calculator Compiler
 
 import streamlit as st
 from utils.symbol_table import SymbolTable
@@ -23,7 +24,7 @@ if st.button("Run"):
         st.warning("Please enter some code.")
     else:
         try:
-            # Parse the user input into an AST, pass lexer explicitly
+            # Parse the user input into an AST
             ast = parser.parse(user_input, lexer=lexer)
 
             # Evaluate using your evaluator
@@ -35,5 +36,8 @@ if st.button("Run"):
             st.info("📘 Symbol Table:")
             st.json(st.session_state.symtab.table)
 
+        except SyntaxError as e:
+            st.error(f"🚫 Syntax Error: {str(e)}")
+
         except Exception as e:
-            st.error(f"❌ Error: {str(e)}")
+            st.error(f"❌ Runtime Error: {str(e)}")

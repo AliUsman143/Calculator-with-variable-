@@ -1,4 +1,5 @@
-class SymbolTable:
+# save the varuiable assignments and look up variables in a symbol table. for futher use in future 
+class SymbolTable: 
     def __init__(self):
         self.variables = {}
 
