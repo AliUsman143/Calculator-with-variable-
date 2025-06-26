@@ -1,5 +1,4 @@
 # streamlit_app.py
-# Streamlit frontend for Calculator Compiler
 
 import streamlit as st
 from utils.symbol_table import SymbolTable
@@ -24,15 +23,37 @@ if st.button("Run"):
         st.warning("Please enter some code.")
     else:
         try:
-            # Parse the user input into an AST
-            ast = parser.parse(user_input, lexer=lexer)
+            # ===============================
+            # 📦 Tokenization
+            # ===============================
+            lexer.input(user_input)
+            token_data = []
+            while True:
+                tok = lexer.token()
+                if not tok:
+                    break
+                token_data.append({
+                    "Type": tok.type,
+                    "Value": tok.value,
+                    "Line": tok.lineno,
+                    "Position": tok.lexpos
+                })
 
-            # Evaluate using your evaluator
+            # 📊 Show tokens in table
+            st.subheader("🧾 Tokens")
+            st.dataframe(token_data, use_container_width=True)
+
+            # ===============================
+            # 🧠 Parsing and Evaluation
+            # ===============================
+            ast = parser.parse(user_input, lexer=lexer)
             result = evaluate(ast, st.session_state.symtab)
 
+            # ✅ Show result
             st.success("✅ Output:")
             st.code(result)
 
+            # 📘 Show symbol table
             st.info("📘 Symbol Table:")
             st.json(st.session_state.symtab.table)
 
